@@ -1,6 +1,6 @@
 // src/components/Leadership.jsx
 import { useEffect } from 'react';
-import chairmanThumbnail from '../assets/bdm-group-photo.jpg';
+import chairmanThumbnail from '../assets/bdm-group-photo.JPG';
 import gsaThumbnail from '../assets/gsa-thumbnail.jpg';
 import cbThumbnail from '../assets/codebar-thumbnail.jpg';
 import fypThumbnail from '../assets/fyp-thumbnail.jpg';
