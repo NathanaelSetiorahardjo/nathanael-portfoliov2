@@ -4,35 +4,47 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation(); // Gets the current URL path
+  const location = useLocation();
 
-  // 1. Handle scroll effect
+  // Sync theme attribute and localStorage
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Handle navbar scroll glass effect
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. THE FIX: Close the mobile menu whenever the route changes
+  // Close mobile menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.classList.toggle('no-scroll', isMenuOpen);
+    return () => document.body.classList.remove('no-scroll');
+  }, [isMenuOpen]);
+
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
   return (
     <nav id="navbar" className={isScrolled ? 'scrolled' : ''}>
       <div className="nav-container">
-        <Link to="/" className="nav-brand">
-          <div className="logo-circle"><span className="logo-text">NS</span></div>
+        <Link to="/" className="nav-brand" aria-label="Home">
+          <div className="logo-circle">
+            <span className="logo-text">NS</span>
+          </div>
         </Link>
-        
+
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <li><Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link></li>
           <li><Link to="/projects" className={location.pathname.includes('/projects') ? 'active' : ''}>Projects</Link></li>
@@ -42,11 +54,17 @@ export default function Navbar() {
         </ul>
 
         <div className="nav-tools">
-          <button className="theme-toggle" onClick={toggleTheme}>
-            <div className="toggle-switch"><div className="toggle-slider"></div></div>
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle color theme">
+            <div className="toggle-switch">
+              <div className="toggle-slider"></div>
+            </div>
           </button>
-          <button className="nav-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
+          <button
+            className="nav-toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
           </button>
         </div>
       </div>
