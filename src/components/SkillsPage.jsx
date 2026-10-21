@@ -48,8 +48,9 @@ const skillCategories = [
 ];
 
 export default function SkillsPage() {
-  useEffect(() => window.scrollTo(0, 0), []);
-
+  useEffect(() => {
+  window.scrollTo(0, 0);
+  }, []);
   return (
     <section className="section page-top-offset">
       <div className="container" style={{ maxWidth: '1000px' }}>

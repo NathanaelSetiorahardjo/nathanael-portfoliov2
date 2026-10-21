@@ -5,7 +5,9 @@ import { projectData } from '../data/projects';
 export default function ProjectsArchive() {
   const [filter, setFilter] = useState('all');
 
-  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+  window.scrollTo(0, 0);
+  }, []);
 
   const filteredProjects =
     filter === 'all' ? projectData : projectData.filter((p) => p.category === filter);

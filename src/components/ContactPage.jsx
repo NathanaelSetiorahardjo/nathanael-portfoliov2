@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 export default function ContactPage() {
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => window.scrollTo(0, 0), []);
+  useEffect(() => {
+  window.scrollTo(0, 0);
+  }, []);
 
   const handleCopyEmail = (e) => {
     e.preventDefault();
