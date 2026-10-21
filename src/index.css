@@ -464,3 +464,5 @@ nav.scrolled { padding: 0.8rem 2rem; box-shadow: 0 10px 30px var(--shadow-light)
 .footer-social-link.github:hover { color: var(--text-primary); }
 .footer-social-link.instagram:hover { color: #e1306c; }
 .footer-copy { color: var(--text-secondary); font-size: 0.9rem; }
+
+* { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
