@@ -15,9 +15,9 @@ Personal portfolio for Nathanael Setiorahardjo: CS student and AI researcher, fu
 - For any UI work, use the `portfolio-design` skill plus `studio-frontend-design` (or Anthropic's `frontend-design` plugin in Claude Code).
 - Concept: **the portfolio is a code editor**, kept simple. Each page is a file (`nathanael.ts`, `projects/<id>.md`, `leadership.log`, `skills.json`, `contact.md`). Desktop shows the full editor: title bar, activity bar, explorer (file tree), open-file tabs, breadcrumb, line-number gutter, status bar. Phone shows a title bar and a bottom tab bar.
 - Retro lives in the details only: pixel icons, the pixel avatar, the yellow block caret, pixel drawings for projects without photos. Never pixel fonts or pixel surfaces (the earlier "Workbench" version felt too toy-like).
-- Palette: light editor `#FBFCFE` on chrome `#EEF1F6`, ink `#182033`, blue `#2F5BEA` (the only accent that means "clickable", also the status bar), yellow `#FFC94A` and coral `#FF7A8A` for small details only. Syntax colours are tokens (`--tok-kw`, `--tok-str`, `--tok-num`, `--tok-prop`) and must pass AA. Dark theme is a midnight editor (`#0F1729`).
+- Palette: VS Code's own themes. Light Modern (editor `#FFFFFF`, chrome `#F8F8F8`, ink `#1F1F1F`, accent `#005FB8`) and Dark Modern (editor `#1F1F1F`, chrome `#181818`, ink `#E0E0E0`, accent `#0078D4`, links `#4DAAFC`), classic `#007ACC` status bar, Light+/Dark+ syntax tokens (`--tok-*`) and bracket colours. Blue and grays only; no purple or navy tints. Must pass AA.
 - Fonts: Geist for headings and reading; Geist Mono for code and editor chrome (tabs, explorer, status bar, tags).
-- Signature per page: home = code window that types out `const nathanael = {…}` from `heroCode` in `src/data/profile.js`, then a terminal; projects = card morphs into its `.md` page; leadership = git-style log; skills = JSON; everywhere = explorer, tabs and ⌘K.
+- Signature per page: home = code window that types out `const nathanael = {…}` from `heroCode` in `src/data/profile.js`, then a terminal; projects = card morphs into its `.md` page; leadership = git-style log; skills = split editor (foldable JSON source next to a live preview, linked on hover; tabs on phones); everywhere = explorer, tabs and ⌘K.
 - Phone: test at 375 px. Full editor from 960 px.
 - Companion: **Molly**, Nathanael's real black and white cat, as an 8-bit sprite (`src/components/molly/`). Sits under CV.pdf at the bottom of the explorer on desktop and on the tab bar on phones. Blinks, swishes the tail, watches the pointer, naps after 40 s idle; a click shows the next line from `src/data/molly.js` (tips with shortcut buttons). Molly only says things that are true; edit lines there. Avoid gendered pronouns for Molly in copy.
 - One signature interaction per page; everything around it stays calm.
@@ -25,7 +25,8 @@ Personal portfolio for Nathanael Setiorahardjo: CS student and AI researcher, fu
 
 ## Motion
 
-- Toolbox: chips drop into a physics pit (matter-js) and can be dragged and thrown. The loop stops when the chips rest or scroll off-screen; with reduced motion it is a plain list.
+- Toolbox: chips drop into a physics pit (matter-js) and can be dragged and thrown. The loop stops when the chips rest or scroll off-screen; with reduced motion the chips appear already landed (no falling) but can still be dragged.
+- Reduced motion turns off movement (page slides, tilt, falling, hover lifts) but keeps fades, the hero typing and tiny in-place details (caret, Molly's blink and tail). Windows users often have this on via Settings > Accessibility > Animation effects.
 - Motion (`motion/react`) for UI state and reveals: section-title selection sweep, leadership branch line drawn on scroll (`useScroll`), card tilt and spotlight (mouse only), phone tab-bar pill, hero typing and terminal, tabs opening/closing, explorer collapse and folder toggle, active indicators (`layoutId`), filter re-layout, scroll reveals (`Reveal`, once only), toast.
 - Page changes (only the page slides; the editor chrome stays still) and the card-to-detail morph use the browser View Transitions API (`viewTransition` on links, `view-transition-name` styles). It degrades to a plain page change where unsupported.
 - GSAP is not installed. Add it only for scroll-driven or text choreography, and record it here. No third animation library.

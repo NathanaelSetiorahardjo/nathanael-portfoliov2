@@ -49,6 +49,13 @@ export function createPit(Matter, container, chips) {
     wake();
   }
 
+  // Reduced motion: let the chips fall instantly and show only where they land.
+  function settle() {
+    drop();
+    for (let i = 0; i < 600; i += 1) Engine.update(engine, 1000 / 60);
+    paint();
+  }
+
   function paint() {
     bodies.forEach((body, i) => {
       const el = chips[i];
@@ -144,6 +151,7 @@ export function createPit(Matter, container, chips) {
 
   return {
     drop,
+    settle,
     setVisible(v) {
       visible = v;
       if (v) {

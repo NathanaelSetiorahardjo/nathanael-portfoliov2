@@ -1,8 +1,9 @@
 // src/components/home/CodeWindow.jsx
 // The home page's signature moment: an editor window types out who Nathanael is,
-// then a terminal underneath "runs" the portfolio. With reduced motion it appears complete.
+// then a terminal underneath "runs" the portfolio. Typing is text appearing, not movement,
+// so it also plays with reduced motion.
 import { useEffect, useMemo, useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { heroCode } from '../../data/profile';
 import { leadershipData } from '../../data/leadership';
 import { projectData } from '../../data/projects';
@@ -20,10 +21,9 @@ const terminal = [
 
 const prefix = { cmd: '$', ok: '✓', ready: '➜' };
 
-function useTyped(total, skip) {
-  const [typed, setTyped] = useState(skip ? total : 0);
+function useTyped(total) {
+  const [typed, setTyped] = useState(0);
   useEffect(() => {
-    if (skip) return undefined;
     let frame = 0;
     let start = 0;
     const tick = (now) => {
@@ -34,15 +34,14 @@ function useTyped(total, skip) {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [total, skip]);
-  return skip ? total : typed;
+  }, [total]);
+  return typed;
 }
 
 export default function CodeWindow() {
-  const reduceMotion = useReducedMotion();
   const lines = useMemo(() => objectToLines('nathanael', heroCode), []);
   const total = useMemo(() => countChars(lines), [lines]);
-  const typed = useTyped(total, reduceMotion);
+  const typed = useTyped(total);
   const done = typed >= total;
 
   const { visible, caretLine } = sliceLines(lines, typed);
@@ -81,7 +80,7 @@ export default function CodeWindow() {
               className={`terminal-line terminal-${line.kind}`}
               initial={false}
               animate={done ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-              transition={{ delay: done && !reduceMotion ? 0.15 + i * 0.32 : 0, duration: 0.3, ease: 'easeOut' }}
+              transition={{ delay: done ? 0.15 + i * 0.32 : 0, duration: 0.3, ease: 'easeOut' }}
             >
               <span className="terminal-prefix">{prefix[line.kind]}</span> {line.text}
             </motion.li>

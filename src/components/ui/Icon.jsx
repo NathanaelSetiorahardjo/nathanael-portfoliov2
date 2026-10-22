@@ -8,6 +8,7 @@ import { Close } from 'pixelarticons/react/Close.js';
 import { Copy } from 'pixelarticons/react/Copy.js';
 import { Download } from 'pixelarticons/react/Download.js';
 import { ExternalLink } from 'pixelarticons/react/ExternalLink.js';
+import { Eye } from 'pixelarticons/react/Eye.js';
 import { Folder } from 'pixelarticons/react/Folder.js';
 import { Github } from 'pixelarticons/react/Github.js';
 import { Home } from 'pixelarticons/react/Home.js';
@@ -30,6 +31,7 @@ const icons = {
   copy: Copy,
   download: Download,
   external: ExternalLink,
+  eye: Eye,
   folder: Folder,
   github: Github,
   home: Home,
