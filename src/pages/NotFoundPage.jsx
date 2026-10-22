@@ -7,14 +7,14 @@ import Icon from '../components/ui/Icon';
 export default function NotFoundPage() {
   usePageTitle('Not found');
   return (
-    <section className="section page-top container narrow not-found">
+    <section className="page-top narrow not-found">
       <span className="mascot-tile mascot-tile-large">
         <PixelMascot size={64} />
       </span>
       <h1 className="page-title">404: file not found</h1>
-      <p className="lead">This page isn’t on the workbench. It may have moved, or the link has a typo.</p>
+      <p className="lead">This file isn’t in the project. It may have moved, or the link has a typo.</p>
       <Link className="btn btn-primary" to="/" viewTransition>
-        <Icon name="home" size={18} /> Back to home
+        <Icon name="home" size={18} /> Open nathanael.ts
       </Link>
     </section>
   );

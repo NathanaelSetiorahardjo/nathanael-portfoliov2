@@ -2,7 +2,7 @@
 // Cmd/Ctrl+K palette (cmdk). Everything here is also reachable by a normal link.
 import { useNavigate } from 'react-router-dom';
 import { Command } from 'cmdk';
-import { navItems } from '../../data/navigation';
+import { navItems, projectFile } from '../../data/navigation';
 import { profile } from '../../data/profile';
 import { projectData } from '../../data/projects';
 import { useCopyEmail } from '../../hooks/useCopyEmail';
@@ -32,7 +32,7 @@ export default function CommandPalette() {
     >
       <div className="palette-input-row">
         <Icon name="search" size={18} />
-        <Command.Input placeholder="Type a command or search…" />
+        <Command.Input placeholder="Open a file or run an action…" />
         <kbd>esc</kbd>
       </div>
       <Command.List>
@@ -53,7 +53,7 @@ export default function CommandPalette() {
             <Command.Item key={p.id} value={`open ${p.title} ${p.tags.join(' ')}`} onSelect={go(`/projects/${p.id}`)}>
               <Icon name="folder" size={18} />
               {p.title}
-              <span className="palette-hint">{p.role}</span>
+              <span className="palette-hint">{projectFile(p)}</span>
             </Command.Item>
           ))}
         </Command.Group>

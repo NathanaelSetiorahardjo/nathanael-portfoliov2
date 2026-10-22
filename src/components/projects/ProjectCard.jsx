@@ -1,11 +1,18 @@
 // src/components/projects/ProjectCard.jsx
-// A blueprint card. The whole card links to the project's spec sheet.
+// A project as an editor panel. The whole card links to the project's file.
 import { Link } from 'react-router-dom';
+import { projectFile } from '../../data/navigation';
+import FileBadge from '../ui/FileBadge';
+import { trackSpotlight } from '../ui/Spotlight';
 import ProjectMedia from './ProjectMedia';
 
 export default function ProjectCard({ project }) {
   return (
-    <article className="card project-card">
+    <article className="card project-card spotlight" onPointerMove={trackSpotlight}>
+      <p className="panel-bar">
+        <FileBadge type="md" />
+        {projectFile(project)}
+      </p>
       <ProjectMedia project={project} />
       <div className="project-card-body">
         <p className="meta">{project.role}</p>

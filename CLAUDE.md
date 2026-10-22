@@ -7,27 +7,27 @@ Personal portfolio for Nathanael Setiorahardjo: CS student and AI researcher, fu
 - React 19 + React Router 7 (data router in `src/router.jsx`) + Vite 8, plain JSX (no TypeScript).
 - Styling: plain CSS in `src/index.css`. All colours, spacing and type sizes are CSS variables on `:root` (dark theme overrides on `[data-theme='dark']`). No Tailwind.
 - Routes: `/`, `/projects`, `/projects/:id`, `/leadership`, `/skills`, `/contact`, plus a 404. Add a page in `src/router.jsx` and `src/data/navigation.js`.
-- Libraries: `motion`, `cmdk` (⌘K palette, lazy-loaded), `pixelarticons` (icons, import one file per icon in `src/components/ui/Icon.jsx`), Fontsource (Pixelify Sans, Geist, Geist Mono).
+- Libraries: `motion`, `cmdk` (⌘K palette, lazy-loaded), `pixelarticons` (icons, import one file per icon in `src/components/ui/Icon.jsx`), Fontsource (Geist, Geist Mono).
 - Hosting: Vercel. `vercel.json` rewrites every path to `index.html` so deep links work.
 
 ## Design
 
 - For any UI work, use the `portfolio-design` skill plus `studio-frontend-design` (or Anthropic's `frontend-design` plugin in Claude Code).
-- Concept: **Nathanael's Workbench**, a cute 8-bit drafting table that works like an IDE. 8-bit is the personality (pixel headings, mascot, icons), the blueprint holds the content (spec-sheet cards on a grid), the IDE is the navigation (file tabs, status bar, ⌘K), Apple is the feel (springs, frosted bars, generous spacing).
-- Rule: surfaces are clean and modern, details are pixel. Body text, cards and photos are never pixelated.
-- Palette: drafting film `#EEF3F8`, ink `#14213D`, blueprint blue `#2F5BEA` (the only accent that means "clickable"), sticky yellow `#FFC94A` and coral `#FF7A8A` for small delights only, never as text colour.
-- Fonts: Pixelify Sans for display titles only; Geist for reading; Geist Mono for IDE chrome (tabs, status bar, meta, tags).
-- Signature per page: home = workbench diagram; projects = card morphs into its spec sheet; leadership = build log; everywhere = ⌘K palette.
-- Phone: the IDE status bar becomes the bottom tab bar. Test at 375 px.
+- Concept: **the portfolio is a code editor**, kept simple. Each page is a file (`nathanael.ts`, `projects/<id>.md`, `leadership.log`, `skills.json`, `contact.md`). Desktop shows the full editor: title bar, activity bar, explorer (file tree), open-file tabs, breadcrumb, line-number gutter, status bar. Phone shows a title bar and a bottom tab bar.
+- Retro lives in the details only: pixel icons, the pixel avatar, the yellow block caret, pixel drawings for projects without photos. Never pixel fonts or pixel surfaces (the earlier "Workbench" version felt too toy-like).
+- Palette: light editor `#FBFCFE` on chrome `#EEF1F6`, ink `#182033`, blue `#2F5BEA` (the only accent that means "clickable", also the status bar), yellow `#FFC94A` and coral `#FF7A8A` for small details only. Syntax colours are tokens (`--tok-kw`, `--tok-str`, `--tok-num`, `--tok-prop`) and must pass AA. Dark theme is a midnight editor (`#0F1729`).
+- Fonts: Geist for headings and reading; Geist Mono for code and editor chrome (tabs, explorer, status bar, tags).
+- Signature per page: home = code window that types out `const nathanael = {…}` from `heroCode` in `src/data/profile.js`, then a terminal; projects = card morphs into its `.md` page; leadership = git-style log; skills = JSON; everywhere = explorer, tabs and ⌘K.
+- Phone: test at 375 px. Full editor from 960 px.
 - One signature interaction per page; everything around it stays calm.
 - Reference screenshots live in `design-refs/`. Look at them before designing a new section.
 
 ## Motion
 
-- Motion (`motion/react`) for UI state: toast, tab indicators, filter re-layout, diagram wires, loader.
-- Page changes and the card-to-spec-sheet morph use the browser View Transitions API (`viewTransition` on links, `view-transition-name` styles). It degrades to a plain page change where unsupported.
+- Motion (`motion/react`) for UI state and reveals: hero typing and terminal, tabs opening/closing, explorer collapse and folder toggle, active indicators (`layoutId`), filter re-layout, scroll reveals (`Reveal`, once only), toast.
+- Page changes (only the page slides; the editor chrome stays still) and the card-to-detail morph use the browser View Transitions API (`viewTransition` on links, `view-transition-name` styles). It degrades to a plain page change where unsupported.
 - GSAP is not installed. Add it only for scroll-driven or text choreography, and record it here. No third animation library.
-- Pixel things move in steps (`steps()`), UI things move with springs.
+- Pixel things move in steps (`steps()`, e.g. the caret and avatar blink), UI things move with springs.
 - Animate `transform` and `opacity` only. Always honour `prefers-reduced-motion`.
 - UI durations 150–400 ms, ease-out for entrances.
 

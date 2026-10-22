@@ -1,5 +1,5 @@
 // src/components/projects/ProjectIllustration.jsx
-// Pixel blueprint drawings for projects that have no real screenshot yet.
+// Pixel drawings for projects that have no real photo yet.
 // Replace by adding `image` to the project in src/data/projects.js.
 const W = 48;
 const H = 30;
@@ -72,7 +72,7 @@ export default function ProjectIllustration({ name, title }) {
       viewBox={`0 0 ${W} ${H}`}
       shapeRendering="crispEdges"
       role="img"
-      aria-label={`Blueprint illustration for ${title}`}
+      aria-label={`Pixel illustration for ${title}`}
     >
       <rect width={W} height={H} className="bp-paper" />
       {Drawing && <Drawing />}

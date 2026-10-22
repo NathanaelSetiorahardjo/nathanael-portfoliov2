@@ -1,4 +1,5 @@
 // src/pages/ContactPage.jsx
+// contact.md: email first, then CV and socials.
 import { contactCopy, profile } from '../data/profile';
 import { useCopyEmail } from '../hooks/useCopyEmail';
 import { usePageTitle } from '../hooks/usePageTitle';
@@ -9,13 +10,22 @@ export default function ContactPage() {
   const copyEmail = useCopyEmail();
 
   return (
-    <section className="section page-top container narrow contact">
-      <h1 className="page-title">{contactCopy.heading}</h1>
+    <section className="page-top narrow contact">
+      <h1 className="page-title">
+        <span className="md-mark" aria-hidden="true">
+          #
+        </span>
+        {contactCopy.heading}
+      </h1>
       <p className="lead">{contactCopy.body}</p>
 
       <div className="card contact-card">
-        <p className="meta">Email</p>
-        <p className="contact-email">{profile.email}</p>
+        <p className="terminal-line terminal-cmd">
+          <span className="terminal-prefix" aria-hidden="true">
+            $
+          </span>{' '}
+          mail <span className="contact-email">{profile.email}</span>
+        </p>
         <div className="actions">
           <button type="button" className="btn btn-primary" onClick={copyEmail}>
             <Icon name="copy" size={18} /> Copy email
@@ -29,6 +39,12 @@ export default function ContactPage() {
         </div>
       </div>
 
+      <h2 className="detail-subtitle">
+        <span className="md-mark" aria-hidden="true">
+          ##
+        </span>
+        Elsewhere
+      </h2>
       <ul className="social-list">
         {profile.socials.map((s) => (
           <li key={s.id}>

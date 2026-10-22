@@ -1,13 +1,18 @@
 // src/components/layout/AppShell.jsx
-// The frame around every page: top bar, page content, footer, status/tab bar, palette, loader.
-import { lazy, Suspense } from 'react';
+// The editor window around every page.
+// Desktop: title bar, activity bar, explorer, open-file tabs, editor, status bar.
+// Phone: title bar, editor and a bottom tab bar.
+import { lazy, Suspense, useState } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
-import BootScreen from './BootScreen';
+import ActivityBar from './ActivityBar';
+import EditorTabs from './EditorTabs';
+import Explorer from './Explorer';
+import LineGutter from './LineGutter';
 import Providers from './Providers';
 import SiteFooter from './SiteFooter';
 import StatusBar from './StatusBar';
-import TopBar from './TopBar';
+import TitleBar from './TitleBar';
 import { usePalette } from '../../hooks/usePalette';
 
 // The palette (cmdk) loads the first time it is opened, keeping the first page light.
@@ -24,20 +29,33 @@ function PaletteLoader() {
 }
 
 export default function AppShell() {
+  const [explorerOpen, setExplorerOpen] = useState(true);
+
   return (
     <MotionConfig reducedMotion="user">
       <Providers>
         <a className="skip-link" href="#content">
           Skip to content
         </a>
-        <TopBar />
-        <main id="content" className="page">
-          <Outlet />
-        </main>
-        <SiteFooter />
+        <TitleBar />
+        <div className="workspace">
+          <ActivityBar explorerOpen={explorerOpen} onToggleExplorer={() => setExplorerOpen((o) => !o)} />
+          <Explorer open={explorerOpen} />
+          <div className="editor">
+            <EditorTabs />
+            <div className="editor-body">
+              <LineGutter />
+              <div className="editor-content">
+                <main id="content" className="page">
+                  <Outlet />
+                </main>
+                <SiteFooter />
+              </div>
+            </div>
+          </div>
+        </div>
         <StatusBar />
         <PaletteLoader />
-        <BootScreen />
         <ScrollRestoration />
       </Providers>
     </MotionConfig>

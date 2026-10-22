@@ -1,15 +1,15 @@
 # nathanael-portfoliov2
 
-Personal portfolio of Nathanael Setiorahardjo: computer science student, AI researcher and Apple Developer Intern.
+Personal portfolio of Nathanael Setiorahardjo: computer science student, AI researcher and incoming Apple Developer Intern.
 
-**Design:** "Nathanael's Workbench", a cute 8-bit drafting table that works like an IDE. See [`CLAUDE.md`](CLAUDE.md) for the design rules.
+**Design:** the portfolio is a simple code editor; every page is a file, with small retro pixel details. See [`CLAUDE.md`](CLAUDE.md) for the design rules.
 
 ## Stack
 
 - React 19, React Router 7, Vite 8 (plain JSX)
 - Plain CSS with design tokens as CSS variables in `src/index.css`
 - [Motion](https://motion.dev) for animation, [cmdk](https://cmdk.paco.me) for the ⌘K palette, [pixelarticons](https://pixelarticons.com) for icons
-- Fonts self-hosted with Fontsource: Pixelify Sans, Geist, Geist Mono
+- Fonts self-hosted with Fontsource: Geist, Geist Mono
 - ESLint and a production build, checked on every pull request by GitHub Actions
 - Deployed on Vercel, with a preview link on every pull request
 
@@ -29,11 +29,11 @@ npm run preview   # serve the production build locally
 
 | To change | Edit |
 | --- | --- |
-| Name, intro, about text, email, socials | `src/data/profile.js` |
+| Name, intro, about text, email, socials, the typed code on the home page | `src/data/profile.js` |
 | Projects (each gets a page at `/projects/<id>`) | `src/data/projects.js` |
 | Leadership roles | `src/data/leadership.js` |
 | Skills and toolbox | `src/data/skills.js` |
-| Pages in the tabs and tab bar | `src/data/navigation.js` and `src/router.jsx` |
+| Pages (file names in the explorer, tabs and tab bar) | `src/data/navigation.js` and `src/router.jsx` |
 | Photos and thumbnails | `src/assets/` (resize to under ~300 KB first) |
 | CV | `public/Nathanael_Setiorahardjo_CV.pdf` (keep the file name) |
 | Colours, fonts, spacing | CSS variables at the top of `src/index.css` |
@@ -47,11 +47,11 @@ src/
   router.jsx       every route
   pages/           one file per page
   components/
-    layout/        top bar, status/tab bar, ⌘K palette, loader, footer, providers
-    home/          hero and the workbench diagram
+    layout/        editor chrome: title bar, activity bar, explorer, tabs, gutter, status/tab bar, ⌘K palette, footer
+    home/          hero and the typed code window
     projects/      project card, media and pixel illustrations
-    leadership/    the build log
-    ui/            icons, mascot, section header
+    leadership/    the git-style role log
+    ui/            icons, pixel avatar, file badges, section header, scroll reveal
   data/            site content, kept out of components
   hooks/           small shared hooks (theme, toast, palette, page title)
   context/         React contexts

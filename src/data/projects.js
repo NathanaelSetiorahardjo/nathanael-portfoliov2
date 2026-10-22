@@ -1,6 +1,6 @@
 // src/data/projects.js
 // Every project on the site. `id` is also the URL: /projects/<id>.
-// Projects without a real screenshot use `illustration` (a pixel blueprint drawing) instead of `image`.
+// Projects without a real screenshot use `illustration` (a pixel drawing) instead of `image`.
 import gestitalkThumbnail from '../assets/gestitalk-thumbnail.jpg';
 import instockThumbnail from '../assets/instock-thumbnail.jpg';
 import medcheckThumbnail from '../assets/medcheck-thumbnail.jpg';
@@ -111,12 +111,12 @@ export const projectData = [
   },
 ];
 export const projectCategories = [
-  { id: 'all', label: 'All work', folder: 'projects/' },
-  { id: 'ai-research', label: 'AI & research', folder: 'ai-research/' },
-  { id: 'engineering', label: 'Engineering', folder: 'engineering/' },
+  { id: 'all', label: 'All work' },
+  { id: 'ai-research', label: 'AI & research' },
+  { id: 'engineering', label: 'Engineering' },
 ];
 
 export const projectsCopy = {
   heading: 'Projects',
-  intro: 'Research, engineering, and design work. Open any blueprint for the full spec.',
+  intro: 'Research, engineering, and design work. Open any file for the details.',
 };

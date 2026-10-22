@@ -1,5 +1,5 @@
 // src/pages/ProjectDetailPage.jsx
-// A project's full spec sheet. Esc or the back button returns to the list.
+// projects/<id>.md: front matter, photo, description and links. Esc returns to the list.
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { projectCategories, projectData } from '../data/projects';
@@ -7,6 +7,25 @@ import { usePageTitle } from '../hooks/usePageTitle';
 import ProjectMedia from '../components/projects/ProjectMedia';
 import Icon from '../components/ui/Icon';
 import NotFoundPage from './NotFoundPage';
+
+function FrontMatter({ rows }) {
+  return (
+    <dl className="front-matter">
+      <span className="fm-fence" aria-hidden="true">
+        ---
+      </span>
+      {rows.map(([key, value]) => (
+        <div key={key} className="fm-row">
+          <dt className="tok-prop">{key}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+      <span className="fm-fence" aria-hidden="true">
+        ---
+      </span>
+    </dl>
+  );
+}
 
 export default function ProjectDetailPage() {
   const { id } = useParams();
@@ -26,52 +45,50 @@ export default function ProjectDetailPage() {
   const category = projectCategories.find((c) => c.id === project.category);
 
   return (
-    <article className="section page-top container spec">
+    <article className="page-top detail">
       <Link to="/projects" viewTransition className="back-link">
         <Icon name="arrow-left" size={18} /> All projects
+        <kbd>esc</kbd>
       </Link>
 
-      <div className="spec-sheet card">
-        <ProjectMedia project={project} className="spec-media" eager />
-        <div className="spec-body">
-          <h1 className="page-title" style={{ viewTransitionName: `project-title-${project.id}` }}>
-            {project.title}
-          </h1>
-          <dl className="spec-table">
-            <div>
-              <dt>Role</dt>
-              <dd>{project.role}</dd>
-            </div>
-            <div>
-              <dt>Area</dt>
-              <dd>{category?.label}</dd>
-            </div>
-          </dl>
-          <p className="spec-desc">{project.challenge}</p>
-          <h2 className="spec-subtitle">Built with</h2>
-          <ul className="tags">
-            {project.tags.map((tag) => (
-              <li key={tag} className="tag">
-                {tag}
+      <h1 className="page-title" style={{ viewTransitionName: `project-title-${project.id}` }}>
+        <span className="md-mark" aria-hidden="true">
+          #
+        </span>
+        {project.title}
+      </h1>
+
+      <FrontMatter
+        rows={[
+          ['role', project.role],
+          ['area', category?.label],
+          ['stack', project.tags.join(', ')],
+        ]}
+      />
+
+      <ProjectMedia project={project} className="detail-media" eager />
+
+      <p className="detail-desc">{project.challenge}</p>
+
+      {project.links.length > 0 && (
+        <>
+          <h2 className="detail-subtitle">
+            <span className="md-mark" aria-hidden="true">
+              ##
+            </span>
+            Links
+          </h2>
+          <ul className="detail-links">
+            {project.links.map((link) => (
+              <li key={link.url}>
+                <a className="btn btn-secondary btn-small" href={link.url} target="_blank" rel="noreferrer">
+                  {link.name} <Icon name="external" size={16} />
+                </a>
               </li>
             ))}
           </ul>
-          {project.links.length > 0 && (
-            <>
-              <h2 className="spec-subtitle">Links</h2>
-              <ul className="spec-links">
-                {project.links.map((link) => (
-                  <li key={link.url}>
-                    <a className="btn btn-secondary btn-small" href={link.url} target="_blank" rel="noreferrer">
-                      {link.name} <Icon name="external" size={16} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
-      </div>
+        </>
+      )}
     </article>
   );
 }

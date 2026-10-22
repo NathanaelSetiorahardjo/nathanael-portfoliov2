@@ -1,5 +1,5 @@
 // src/data/leadership.js
-// Roles shown on the leadership "build log", in display order.
+// Roles shown in leadership.log, newest first.
 import bdmPhoto from '../assets/bdm-group-photo.JPG';
 import gsaPhoto from '../assets/gsa-thumbnail.jpg';
 import codebarPhoto from '../assets/codebar-thumbnail.jpg';
@@ -20,7 +20,7 @@ export const leadershipData = [
     image: bdmPhoto,
     link: { name: '@ukm_bdm', url: 'https://www.instagram.com/ukm_bdm/' },
     bullets: [
-      'Led a cross-functional student music organization of 30 members across 5 divisions.',
+      'Led a cross-functional student music organization of around 300 members, with a 40-person activist team across BINUS regions.',
       "Overhauled BDM's operational foundation, introducing the first SOP and archive system.",
       "Restored the organization's standing with the university, repaired cross-organizational relationships, and grew active player turnout to a record 35.",
       'Restructured administrative responsibilities with the executive team (Nobertus & Rafael Shira) to commit to a modern orchestra identity.',

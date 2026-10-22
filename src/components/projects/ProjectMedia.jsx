@@ -1,6 +1,6 @@
 // src/components/projects/ProjectMedia.jsx
-// A project's screenshot, or its blueprint drawing when there is no screenshot.
-// `viewTransitionName` lets the card image morph into the spec sheet image.
+// A project's screenshot, or its pixel drawing when there is no screenshot.
+// `viewTransitionName` lets the card image morph into the detail page image.
 import ProjectIllustration from './ProjectIllustration';
 
 export default function ProjectMedia({ project, className = '', eager = false }) {

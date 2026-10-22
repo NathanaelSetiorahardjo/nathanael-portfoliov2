@@ -27,6 +27,16 @@ export const homeCopy = {
   next: 'Incoming Apple Developer Intern, accepted to this year’s cohort. The program starts in March 2027.',
 };
 
+// The object typed out in the home page code window. Only confirmed facts go here.
+export const heroCode = {
+  role: 'Computer Science student',
+  campus: 'BINUS University',
+  classOf: 2028,
+  builds: ['AI tools', 'web apps'],
+  leads: 'BDM, campus music organization',
+  next: 'Apple Developer cohort, March 2027',
+};
+
 export const aboutCopy = {
   heading: 'A little about me',
   paragraphs: [
