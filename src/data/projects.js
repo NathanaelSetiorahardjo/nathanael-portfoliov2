@@ -1,8 +1,11 @@
 // src/data/projects.js
+// Every project on the site. `id` is also the URL: /projects/<id>.
+// Projects without a real screenshot use `illustration` (a pixel drawing) instead of `image`.
 import gestitalkThumbnail from '../assets/gestitalk-thumbnail.jpg';
 import instockThumbnail from '../assets/instock-thumbnail.jpg';
 import medcheckThumbnail from '../assets/medcheck-thumbnail.jpg';
 import barberhubThumbnail from '../assets/barberhub-thumbnail.jpg';
+import vitPhoto from '../assets/vit-icimtech.jpg';
 
 export const projectData = [
   {
@@ -74,7 +77,7 @@ export const projectData = [
     id: 'inductive-bias',
     featured: false,
     category: 'ai-research',
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800',
+    image: vitPhoto,
     role: 'Lead AI Researcher',
     title: 'Progressive Window Expansion (ViT)',
     challenge:
@@ -86,7 +89,7 @@ export const projectData = [
     id: 'lane-guard',
     featured: false,
     category: 'ai-research',
-    image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800',
+    illustration: 'lane',
     role: 'Computer Vision Engineer',
     title: 'Lane-Guard',
     challenge:
@@ -98,7 +101,7 @@ export const projectData = [
     id: 'tubris',
     featured: false,
     category: 'ai-research',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800',
+    illustration: 'xray',
     role: 'AI Developer',
     title: 'TUBRIS Early Screening',
     challenge:
@@ -107,3 +110,13 @@ export const projectData = [
     links: [],
   },
 ];
+export const projectCategories = [
+  { id: 'all', label: 'All work' },
+  { id: 'ai-research', label: 'AI & research' },
+  { id: 'engineering', label: 'Engineering' },
+];
+
+export const projectsCopy = {
+  heading: 'Projects',
+  intro: 'Research, engineering, and design work. Open any file for the details.',
+};
