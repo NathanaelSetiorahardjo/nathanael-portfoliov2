@@ -267,8 +267,9 @@ kbd {
   display: inline-grid;
   place-items: center;
   padding: 3px;
-  background: var(--yellow);
-  clip-path: var(--pixel-corners);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  border-radius: 6px;
 }
 
 .mascot-tile-large {
@@ -538,8 +539,26 @@ kbd {
   transition: color 160ms var(--ease-out);
 }
 
+.tabbar-link {
+  position: relative;
+}
+
 .tabbar-link.active {
   color: var(--blue);
+}
+
+.tabbar-active {
+  position: absolute;
+  top: 8px;
+  width: 52px;
+  height: 30px;
+  background: var(--blue-soft);
+  border-radius: 999px;
+}
+
+.tabbar-link .icon,
+.tabbar-link span:not(.tabbar-active) {
+  position: relative;
 }
 
 .tabbar-link .icon {
@@ -594,6 +613,21 @@ kbd {
   font-family: var(--font-mono);
   font-weight: 500;
   color: var(--ink-faint);
+}
+
+.sweep-wrap {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.sweep {
+  position: absolute;
+  inset: -2px -6px;
+  z-index: -1;
+  background: var(--blue-soft);
+  border-radius: 4px;
+  transform-origin: left;
 }
 
 .section-title {
@@ -869,6 +903,12 @@ kbd {
   opacity: 1;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .tilt:hover {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-3px);
+  }
+}
+
 .panel-bar {
   display: flex;
   align-items: center;
@@ -1004,7 +1044,22 @@ kbd {
   color: var(--ink-soft);
 }
 
-.about-text .section-title {
+.about-text .sweep-wrap {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.sweep {
+  position: absolute;
+  inset: -2px -6px;
+  z-index: -1;
+  background: var(--blue-soft);
+  border-radius: 4px;
+  transform-origin: left;
+}
+
+.section-title {
   color: var(--ink);
 }
 
@@ -1017,14 +1072,20 @@ kbd {
   padding-left: 28px;
 }
 
-.role-log::before {
+.role-log::before,
+.role-log-line {
   content: '';
   position: absolute;
   left: 7px;
   top: 12px;
   bottom: 12px;
   width: 2px;
-  background: var(--line-strong);
+  background: var(--line);
+}
+
+.role-log-line {
+  background: var(--blue);
+  transform-origin: top;
 }
 
 .log-entry {
@@ -1141,6 +1202,69 @@ kbd {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-small);
+}
+
+/* Physics mode (ToolboxPit): chips become draggable bodies in a pit. */
+.toolbox.is-live {
+  position: relative;
+  display: block;
+  height: 240px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 1.5px) 0 0 / 16px 16px,
+    var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: inset 0 2px 10px -6px rgba(24, 32, 51, 0.25);
+}
+
+.toolbox.is-live .tool {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transform: translate3d(0, -200px, 0);
+  will-change: transform;
+  box-shadow: 0 2px 0 var(--line);
+}
+
+.toolbox.is-live .tool:nth-child(3n + 1) {
+  color: var(--tok-prop);
+}
+
+.toolbox.is-live .tool:nth-child(3n + 2) {
+  color: var(--tok-str);
+}
+
+.toolbox.is-live .tool:nth-child(3n) {
+  color: var(--tok-num);
+}
+
+.toolbox.is-live .tool.is-grabbed {
+  cursor: grabbing;
+  border-color: var(--blue);
+  box-shadow: 0 10px 20px -10px rgba(24, 32, 51, 0.45);
+}
+
+.toolbox-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  margin-top: var(--s2);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.toolbox-hint .text-link {
+  border: 0;
+  background: none;
+  padding: var(--s1) 0;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 /* ---------- Projects page ---------- */
@@ -1336,6 +1460,232 @@ kbd {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--s4);
+}
+
+/* ---------- Molly, the companion cat ---------- */
+.molly {
+  position: relative;
+  z-index: 45;
+}
+
+.molly-explorer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: auto;
+  padding: var(--s6) var(--s2) var(--s2);
+  border-bottom: 2px solid var(--line-strong);
+}
+
+.molly-dock {
+  position: fixed;
+  right: 10px;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) - 3px);
+}
+
+.molly-button {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.molly-button:focus-visible {
+  outline-offset: 4px;
+}
+
+.molly-hop {
+  display: block;
+}
+
+.molly-sprite {
+  display: block;
+  color: transparent;
+}
+
+[data-theme='dark'] .molly-sprite {
+  color: #8a96ae;
+}
+
+.molly-outline rect {
+  fill: currentColor;
+}
+
+/* The tail swaps between two poses; eyes blink now and then. Both move in pixel steps. */
+.molly-tail-up {
+  animation: tail-a 2.4s steps(1, end) infinite;
+}
+
+.molly-tail-down {
+  animation: tail-b 2.4s steps(1, end) infinite;
+}
+
+@keyframes tail-a {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes tail-b {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  50.01%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.is-asleep .molly-tail-up {
+  animation: none;
+  opacity: 0;
+}
+
+.is-asleep .molly-tail-down {
+  animation: none;
+  opacity: 1;
+}
+
+.molly-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.5s steps(1, end) infinite;
+}
+
+.molly-button:hover .molly-sprite {
+  animation: purr 0.3s steps(2, end) infinite;
+}
+
+@keyframes purr {
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+.molly-zzz {
+  position: absolute;
+  left: 46px;
+  top: -6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+
+.molly-zzz span {
+  position: absolute;
+  opacity: 0;
+  animation: zzz 2.4s steps(6, end) infinite;
+}
+
+.molly-zzz span:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.molly-zzz span:nth-child(3) {
+  animation-delay: 1.6s;
+}
+
+@keyframes zzz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(12px, -24px);
+  }
+}
+
+.molly-hearts {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  pointer-events: none;
+}
+
+.molly-heart {
+  position: absolute;
+  width: 10px;
+  height: 9px;
+  background: #ff6f91;
+  clip-path: polygon(0 20%, 20% 0, 40% 0, 50% 20%, 60% 0, 80% 0, 100% 20%, 100% 50%, 50% 100%, 0 50%);
+}
+
+.molly-bubble {
+  position: absolute;
+  bottom: calc(100% - 4px);
+  left: var(--s2);
+  width: 220px;
+  padding: var(--s3);
+  font-size: 13.5px;
+  line-height: 1.45;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  transform-origin: bottom left;
+}
+
+.molly-bubble::after {
+  content: '';
+  position: absolute;
+  left: 24px;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  background: var(--surface);
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  transform: rotate(45deg);
+}
+
+.molly-dock .molly-bubble {
+  left: auto;
+  right: 0;
+  width: min(260px, calc(100vw - 32px));
+  transform-origin: bottom right;
+}
+
+.molly-dock .molly-bubble::after {
+  left: auto;
+  right: 18px;
+}
+
+.molly-bubble-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s2);
+}
+
+.molly-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.molly-close:hover {
+  background: var(--surface-2);
 }
 
 /* ---------- Toast ---------- */
@@ -1647,8 +1997,9 @@ kbd {
     width: 38px;
     height: 38px;
     margin-bottom: var(--s2);
-    background: var(--yellow);
-    clip-path: var(--pixel-corners);
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+    border-radius: 8px;
     transition: transform 200ms var(--ease-out);
   }
 
@@ -1707,10 +2058,12 @@ kbd {
   }
 
   .explorer-inner {
+    display: flex;
+    flex-direction: column;
     width: var(--explorer-w);
     height: 100%;
     overflow-y: auto;
-    padding: var(--s3) var(--s2);
+    padding: var(--s3) var(--s2) 0;
   }
 
   .explorer-title {

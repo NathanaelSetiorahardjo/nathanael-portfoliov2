@@ -2,6 +2,7 @@
 // Desktop: an editor status bar (open file, line, search, email). Phone: the bottom tab bar.
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { fileForPath, navItems } from '../../data/navigation';
 import { profile } from '../../data/profile';
 import { useCopyEmail } from '../../hooks/useCopyEmail';
@@ -58,8 +59,19 @@ export default function StatusBar() {
       <nav className="tabbar" aria-label="Main">
         {navItems.map((item) => (
           <NavLink key={item.to} to={item.to} end={item.to === '/'} viewTransition className="tabbar-link">
-            <Icon name={item.icon} size={22} />
-            <span>{item.label}</span>
+            {({ isActive }) => (
+              <>
+                {isActive && (
+                  <motion.span
+                    layoutId="tabbar-active"
+                    className="tabbar-active"
+                    transition={{ type: 'spring', stiffness: 500, damping: 36 }}
+                  />
+                )}
+                <Icon name={item.icon} size={22} />
+                <span>{item.label}</span>
+              </>
+            )}
           </NavLink>
         ))}
         <button type="button" className="tabbar-link" onClick={() => setOpen(true)}>

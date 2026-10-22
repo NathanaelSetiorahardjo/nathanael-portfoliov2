@@ -13,7 +13,9 @@ import Providers from './Providers';
 import SiteFooter from './SiteFooter';
 import StatusBar from './StatusBar';
 import TitleBar from './TitleBar';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { usePalette } from '../../hooks/usePalette';
+import Molly from '../molly/Molly';
 
 // The palette (cmdk) loads the first time it is opened, keeping the first page light.
 const CommandPalette = lazy(() => import('./CommandPalette'));
@@ -30,6 +32,7 @@ function PaletteLoader() {
 
 export default function AppShell() {
   const [explorerOpen, setExplorerOpen] = useState(true);
+  const desktop = useMediaQuery('(min-width: 960px)');
 
   return (
     <MotionConfig reducedMotion="user">
@@ -55,6 +58,8 @@ export default function AppShell() {
           </div>
         </div>
         <StatusBar />
+        {/* On desktop Molly sits in the explorer; on phones Molly sits on the tab bar. */}
+        {!desktop && <Molly placement="dock" scale={2} />}
         <PaletteLoader />
         <ScrollRestoration />
       </Providers>

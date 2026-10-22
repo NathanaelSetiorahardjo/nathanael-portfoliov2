@@ -3,12 +3,12 @@
 import { Link } from 'react-router-dom';
 import { projectFile } from '../../data/navigation';
 import FileBadge from '../ui/FileBadge';
-import { trackSpotlight } from '../ui/Spotlight';
+import { resetSpotlight, trackSpotlight } from '../ui/Spotlight';
 import ProjectMedia from './ProjectMedia';
 
 export default function ProjectCard({ project }) {
   return (
-    <article className="card project-card spotlight" onPointerMove={trackSpotlight}>
+    <article className="card project-card spotlight tilt" onPointerMove={trackSpotlight} onPointerLeave={resetSpotlight}>
       <p className="panel-bar">
         <FileBadge type="md" />
         {projectFile(project)}

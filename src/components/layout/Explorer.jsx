@@ -6,10 +6,13 @@ import { AnimatePresence, motion } from 'motion/react';
 import { navItems, projectFile } from '../../data/navigation';
 import { profile } from '../../data/profile';
 import { projectData } from '../../data/projects';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import Molly from '../molly/Molly';
 import FileBadge from '../ui/FileBadge';
 
 const spring = { type: 'spring', stiffness: 520, damping: 40 };
 const WIDTH = 248; // keep in step with --explorer-w in index.css
+const rowIn = { hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0 } };
 
 function TreeLink({ to, end, depth = 0, type, children }) {
   return (
@@ -30,6 +33,7 @@ export default function Explorer({ open }) {
   const [projectsOpen, setProjectsOpen] = useState(true);
   const [home, projects, ...rest] = navItems;
   const inProjects = pathname.startsWith('/projects');
+  const desktop = useMediaQuery('(min-width: 960px)');
 
   return (
     <motion.aside
@@ -43,13 +47,13 @@ export default function Explorer({ open }) {
       <div className="explorer-inner">
         <p className="explorer-title">Explorer</p>
         <p className="tree-root">portfolio</p>
-        <ul className="tree">
-          <li>
+        <motion.ul className="tree" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.035 } } }}>
+          <motion.li variants={rowIn}>
             <TreeLink to={home.to} end type={home.type}>
               {home.file}
             </TreeLink>
-          </li>
-          <li>
+          </motion.li>
+          <motion.li variants={rowIn}>
             <div className={`tree-folder${inProjects ? ' is-current' : ''}`}>
               <button
                 type="button"
@@ -85,22 +89,23 @@ export default function Explorer({ open }) {
                 </motion.ul>
               )}
             </AnimatePresence>
-          </li>
+          </motion.li>
           {rest.map((item) => (
-            <li key={item.to}>
+            <motion.li key={item.to} variants={rowIn}>
               <TreeLink to={item.to} type={item.type}>
                 {item.file}
               </TreeLink>
-            </li>
+            </motion.li>
           ))}
-          <li>
+          <motion.li variants={rowIn}>
             <a className="tree-row" href={profile.cv.href} download={profile.cv.filename}>
               <FileBadge type="pdf" />
               <span className="tree-name">CV.pdf</span>
               <span className="tree-hint">download</span>
             </a>
-          </li>
-        </ul>
+          </motion.li>
+        </motion.ul>
+        {desktop && <Molly placement="explorer" />}
       </div>
     </motion.aside>
   );

@@ -7,6 +7,7 @@ import { toolbox } from '../data/skills';
 import { usePageTitle } from '../hooks/usePageTitle';
 import Hero from '../components/home/Hero';
 import RoleLog from '../components/leadership/RoleLog';
+import ToolboxPit from '../components/home/ToolboxPit';
 import ProjectCard from '../components/projects/ProjectCard';
 import Reveal from '../components/ui/Reveal';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -62,13 +63,7 @@ export default function HomePage() {
 
       <section className="section" aria-labelledby="toolbox-title">
         <SectionHeader id="toolbox-title" title="Toolbox" intro="Languages and tools I use most." />
-        <ul className="toolbox">
-          {toolbox.map((t, i) => (
-            <Reveal as="li" key={t} index={i} className="tool">
-              {t}
-            </Reveal>
-          ))}
-        </ul>
+        <ToolboxPit tools={toolbox} />
       </section>
     </>
   );
