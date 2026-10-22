@@ -23,6 +23,8 @@ export const homeCopy = {
   greeting: "Hi, I'm Nathanael.",
   intro:
     'Computer Science student at BINUS University. I build AI tools and web apps, and I lead BDM, my campus music organization.',
+  // Short "what's next" note under the intro. Set to null to hide it.
+  next: 'Incoming Apple Developer Intern, accepted to this year’s cohort. The program starts in March 2027.',
 };
 
 export const aboutCopy = {

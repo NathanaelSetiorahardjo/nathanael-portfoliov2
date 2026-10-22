@@ -5,6 +5,7 @@ import gestitalkThumbnail from '../assets/gestitalk-thumbnail.jpg';
 import instockThumbnail from '../assets/instock-thumbnail.jpg';
 import medcheckThumbnail from '../assets/medcheck-thumbnail.jpg';
 import barberhubThumbnail from '../assets/barberhub-thumbnail.jpg';
+import vitPhoto from '../assets/vit-icimtech.jpg';
 
 export const projectData = [
   {
@@ -76,7 +77,7 @@ export const projectData = [
     id: 'inductive-bias',
     featured: false,
     category: 'ai-research',
-    illustration: 'vit',
+    image: vitPhoto,
     role: 'Lead AI Researcher',
     title: 'Progressive Window Expansion (ViT)',
     challenge:

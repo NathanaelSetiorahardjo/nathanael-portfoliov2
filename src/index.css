@@ -245,6 +245,29 @@ ol {
   color: var(--ink-soft);
 }
 
+.next-note {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: var(--s4);
+  padding: var(--s2) var(--s3);
+  font-size: 15px;
+  font-weight: 500;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2px var(--line);
+  clip-path: var(--pixel-corners);
+  max-width: 54ch;
+}
+
+.next-dot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--yellow);
+  box-shadow: inset 0 0 0 2px var(--ink);
+  transform: translateY(1px);
+}
+
 /* ---------- Buttons ---------- */
 .actions {
   display: flex;

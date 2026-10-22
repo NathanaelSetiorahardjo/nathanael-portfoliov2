@@ -10,6 +10,12 @@ export default function Hero() {
       <div className="hero-text">
         <h1 className="display">{homeCopy.greeting}</h1>
         <p className="lead">{homeCopy.intro}</p>
+        {homeCopy.next && (
+          <p className="next-note">
+            <span className="next-dot" aria-hidden="true" />
+            {homeCopy.next}
+          </p>
+        )}
         <div className="actions">
           <a className="btn btn-primary" href={profile.cv.href} download={profile.cv.filename}>
             <Icon name="download" size={18} /> Download CV

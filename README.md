@@ -38,7 +38,7 @@ npm run preview   # serve the production build locally
 | CV | `public/Nathanael_Setiorahardjo_CV.pdf` (keep the file name) |
 | Colours, fonts, spacing | CSS variables at the top of `src/index.css` |
 
-To add a project, copy an entry in `src/data/projects.js`, give it a new `id`, and import its screenshot at the top of the file. No screenshot yet? Use `illustration: 'vit' | 'lane' | 'xray'` for now.
+To add a project, copy an entry in `src/data/projects.js`, give it a new `id`, and import its screenshot at the top of the file. No screenshot yet? Use `illustration: 'vit' | 'lane' | 'xray'` for now (Lane-Guard and TUBRIS use this).
 
 ## Project layout
 
