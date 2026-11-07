@@ -64,6 +64,7 @@ export default function ProjectDetailPage() {
           ['team', project.team],
           ['event', project.event],
           ['result', project.result],
+          ['status', project.status],
           ['area', category?.label],
           ['stack', project.tags.join(', ')],
         ]}

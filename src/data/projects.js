@@ -2,7 +2,8 @@
 // Every project on the site. `id` is also the URL: /projects/<id>.
 // Projects without a real screenshot use `illustration` (a pixel drawing) instead of `image`.
 // Optional fields, shown on the project page when present:
-//   team: who it was built with · event: competition and date · result: how it placed · highlights: "How it works" bullet list
+//   team: who it was built with · event: competition or show, and date · result: how it placed
+//   status: where it stands now (shown on the project page only) · highlights: "How it works" bullet list
 //   images: several pictures [{ src, alt }] instead of one `image`; cards and pages show a swipeable slider
 import gestitalkThumbnail from '../assets/gestitalk-thumbnail.jpg';
 import instockThumbnail from '../assets/instock-thumbnail.jpg';
@@ -12,6 +13,7 @@ import vitPhoto from '../assets/vit-icimtech.jpg';
 import runaDashboard from '../assets/runa-dashboard.jpg';
 import runaPresentation from '../assets/runa-presentation.jpg';
 import runaQna from '../assets/runa-qna.jpg';
+import katEticket from '../assets/kat-eticket.jpg';
 
 export const projectData = [
   {
@@ -47,12 +49,20 @@ export const projectData = [
     id: 'kat-ticketing',
     featured: false,
     category: 'engineering',
-    illustration: 'ticket',
+    image: katEticket, // a real e-ticket; the buyer's name is pixelated and the code was voided
     role: 'Sole Developer',
+    event: 'Konser Akhir Tahun XI, Grahaswara UNTAR, 20 Dec 2026',
+    status: 'Live, 53 buyers so far (Nov 2026), about 400 expected', // update as sales grow
     title: 'KAT XI Ticketing System',
     challenge:
-      'An automated ticketing system for the KAT XI show, built with Google Apps Script and Google Sheets. Designed, built and deployed solo, and in live use for the show.',
-    tags: ['Google Apps Script', 'Google Sheets', 'Automation'],
+      'The ticketing system for Konser Akhir Tahun XI, the annual concert of Bersama Dalam Musik. I built and deployed it solo on Google Apps Script and Google Sheets: it takes orders, emails e-tickets with QR codes, and checks guests in at the door through a scanner web app.',
+    highlights: [
+      'Buyers order and pay through a Google Form. Each order lands in Google Sheets with a randomly generated booking code.',
+      'The treasurer verifies the payment and marks the order VALID in the sheet.',
+      'That sends the buyer an e-ticket by email with their zone, show time, package, booking code and a QR code.',
+      'On the day, ushers scan the QR code with a separate scanner web app I also built, and swap it for a physical ticket. If a scan fails, they type the last 6 characters of the code.',
+    ],
+    tags: ['Google Apps Script', 'Google Sheets', 'Google Forms', 'QR Codes', 'Automation'],
     links: [],
   },
   {
