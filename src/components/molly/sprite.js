@@ -46,3 +46,32 @@ export const colors = {
   lid: '#6b7183',
   heart: '#ff6f91',
 };
+
+// Molly walking, seen from the side and facing right (flipped with CSS to walk left).
+// Same 20 x 16 box as the sitting pose, so Molly stays on the same floor line.
+// e = eye. Legs are drawn separately: two frames that swap to make the walk.
+export const walkBody = [
+  '....................',
+  '....................',
+  '....................',
+  '...............k..k.',
+  'k..............kkkkk',
+  'k..............kkkkk',
+  '.k.............kekkk',
+  '.k.............kkkwn',
+  '..kkkkkkkkkkkkkkkww.',
+  '..kkkkkkkkkkkkkkwww.',
+  '..kkkkkkkkkkkkkwww..',
+  '..kkkkkkkkkkkkkkk...',
+  '..kkkkkkkkkkkkkkk...',
+  '....................',
+  '....................',
+  '....................',
+];
+
+// [x, y, colour letter] for each leg pixel: two rows of black fur, then a white paw.
+// Frame A: legs straight down. Frame B: mid-stride, each pair spread apart.
+const straight = (x) => [[x, 13, 'k'], [x, 14, 'k'], [x, 15, 'w']];
+const angled = (x, out) => [[x, 13, 'k'], [out, 14, 'k'], [out, 15, 'w']];
+export const walkLegsA = [...straight(3), ...straight(5), ...straight(12), ...straight(14)];
+export const walkLegsB = [...angled(3, 2), ...angled(5, 6), ...angled(12, 11), ...angled(14, 15)];

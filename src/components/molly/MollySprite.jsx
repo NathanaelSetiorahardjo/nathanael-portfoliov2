@@ -1,6 +1,7 @@
 // src/components/molly/MollySprite.jsx
 // Draws Molly. `look` (-1, 0, 1) moves the pupils; `eyesClosed` shows sleepy lids.
-import { body, colors, eyes, H, tailDown, tailUp, W } from './sprite';
+// `walking` swaps to the side view with two leg frames (flip it with CSS to face left).
+import { body, colors, eyes, H, tailDown, tailUp, W, walkBody, walkLegsA, walkLegsB } from './sprite';
 
 const filled = new Set();
 body.forEach((row, y) => [...row].forEach((c, x) => c !== '.' && filled.add(`${x},${y}`)));
@@ -10,14 +11,18 @@ eyes.forEach(([ex, ey]) => {
 const solid = new Set([...filled, ...tailUp.map(([x, y]) => `${x},${y}`), ...tailDown.map(([x, y]) => `${x},${y}`)]);
 
 // A one-pixel outline around the cat, shown in dark mode so the black fur stays visible.
-const outline = [];
-for (let y = -1; y <= H; y += 1) {
-  for (let x = -1; x <= W; x += 1) {
-    if (solid.has(`${x},${y}`)) continue;
-    const touches = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => filled.has(`${x + dx},${y + dy}`));
-    if (touches) outline.push([x, y]);
+function outlineOf(filledSet, solidSet = filledSet) {
+  const out = [];
+  for (let y = -1; y <= H; y += 1) {
+    for (let x = -1; x <= W; x += 1) {
+      if (solidSet.has(`${x},${y}`)) continue;
+      const touches = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => filledSet.has(`${x + dx},${y + dy}`));
+      if (touches) out.push([x, y]);
+    }
   }
+  return out;
 }
+const outline = outlineOf(filled, solid);
 
 const px = (x, y, fill, key, className) => (
   <rect key={key ?? `${x}-${y}`} x={x} y={y} width="1" height="1" fill={fill} className={className} />
@@ -30,7 +35,43 @@ body.forEach((row, y) =>
   }),
 );
 
-export default function MollySprite({ look = 0, eyesClosed = false, scale = 3 }) {
+// Side view: body, then each leg frame with its own outline so the two swap together.
+const walkFilled = new Set();
+walkBody.forEach((row, y) => [...row].forEach((c, x) => c !== '.' && walkFilled.add(`${x},${y}`)));
+const walkPixels = [];
+walkBody.forEach((row, y) =>
+  [...row].forEach((c, x) => {
+    if (c !== '.') walkPixels.push(px(x, y, c === 'e' ? colors.eye : colors[c]));
+  }),
+);
+const walkFrames = [walkLegsA, walkLegsB].map((legs) => {
+  const all = new Set([...walkFilled, ...legs.map(([x, y]) => `${x},${y}`)]);
+  return { legs, outline: outlineOf(all) };
+});
+
+function WalkingSprite({ scale }) {
+  return (
+    <svg
+      className="molly-sprite molly-walking"
+      width={(W + 2) * scale}
+      height={(H + 2) * scale}
+      viewBox={`-1 -1 ${W + 2} ${H + 2}`}
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+    >
+      {walkFrames.map((frame, i) => (
+        <g key={i} className={`molly-legs molly-legs-${i ? 'b' : 'a'}`}>
+          <g className="molly-outline">{frame.outline.map(([x, y]) => px(x, y, 'currentColor', `o${x}-${y}`))}</g>
+          {frame.legs.map(([x, y, c]) => px(x, y, colors[c], `l${x}-${y}`))}
+        </g>
+      ))}
+      <g className="molly-body">{walkPixels}</g>
+    </svg>
+  );
+}
+
+export default function MollySprite({ look = 0, eyesClosed = false, walking = false, scale = 3 }) {
+  if (walking) return <WalkingSprite scale={scale} />;
   return (
     <svg
       className="molly-sprite"
