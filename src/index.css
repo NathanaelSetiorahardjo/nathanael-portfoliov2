@@ -356,6 +356,12 @@ kbd {
   font-size: 14px;
 }
 
+/* Square icon-only button; give it an aria-label. */
+.btn-icon {
+  width: 44px;
+  padding: 0;
+}
+
 .icon-button {
   display: inline-grid;
   place-items: center;
@@ -1776,6 +1782,15 @@ kbd {
   color: var(--tok-str);
 }
 
+.contact-card.is-compact {
+  padding: var(--s4) var(--s5);
+}
+
+.contact-socials {
+  display: flex;
+  gap: var(--s2);
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   display: flex;
@@ -1820,6 +1835,23 @@ kbd {
 
 .molly-hop {
   display: block;
+}
+
+/* Walking: the side-view sprite flips to face left, and the two leg frames swap in steps. */
+.molly-facing {
+  display: block;
+}
+
+.molly-facing.is-left {
+  transform: scaleX(-1);
+}
+
+.molly-legs-a {
+  animation: tail-a 0.36s steps(1, end) infinite;
+}
+
+.molly-legs-b {
+  animation: tail-b 0.36s steps(1, end) infinite;
 }
 
 .molly-sprite {
@@ -1964,7 +1996,7 @@ kbd {
 .molly-bubble::after {
   content: '';
   position: absolute;
-  left: 24px;
+  left: clamp(12px, calc(24px + var(--molly-x, 0px)), 196px);
   bottom: -6px;
   width: 10px;
   height: 10px;
@@ -1976,14 +2008,14 @@ kbd {
 
 .molly-dock .molly-bubble {
   left: auto;
-  right: 0;
+  right: calc(0px - var(--bubble-shift, 0px));
   width: min(260px, calc(100vw - 32px));
   transform-origin: bottom right;
 }
 
 .molly-dock .molly-bubble::after {
   left: auto;
-  right: 18px;
+  right: clamp(12px, calc(18px + var(--bubble-shift, 0px) - var(--molly-x, 0px)), calc(100% - 24px));
 }
 
 .molly-bubble-actions {
