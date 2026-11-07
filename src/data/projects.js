@@ -9,6 +9,7 @@ import instockThumbnail from '../assets/instock-thumbnail.jpg';
 import medcheckThumbnail from '../assets/medcheck-thumbnail.jpg';
 import barberhubThumbnail from '../assets/barberhub-thumbnail.jpg';
 import vitPhoto from '../assets/vit-icimtech.jpg';
+import runaDashboard from '../assets/runa-dashboard.jpg';
 // Runa photos: save them as src/assets/runa-1.jpg and runa-2.jpg (under ~300 KB), then uncomment:
 // import runaPhoto1 from '../assets/runa-1.jpg';
 // import runaPhoto2 from '../assets/runa-2.jpg';
@@ -18,7 +19,7 @@ export const projectData = [
     id: 'runa',
     featured: true,
     category: 'ai-research',
-    illustration: 'chat', // swap for `image: runaPhoto1` once the photos are in
+    image: runaDashboard, // the live Runa dashboard (Stats page)
     role: 'Developer & Presenter (roles shared evenly)',
     team: 'Jiovanny Lim, Aviel Aquino',
     event: 'SAP x AWS AI Agentic Hackathon, 31 Oct 2026',
