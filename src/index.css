@@ -2556,6 +2556,11 @@ kbd {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 
+  /* Four featured projects sit in a tidy 2 x 2 instead of 3 + 1. */
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .back-link kbd {
     display: inline;
   }
@@ -2626,11 +2631,21 @@ kbd {
   .card-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* ---------- Reduced motion ----------
    Nothing slides, tilts or zooms. Tiny in-place details (blinking caret, Molly's blink and tail)
    and fades stay, because they don't move anything across the screen. */
+@media (min-width: 1800px) {
+  .featured-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

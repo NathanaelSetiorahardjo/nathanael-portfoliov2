@@ -62,6 +62,7 @@ export default function ProjectDetailPage() {
         rows={[
           ['role', project.role],
           ['team', project.team],
+          ['event', project.event],
           ['result', project.result],
           ['area', category?.label],
           ['stack', project.tags.join(', ')],
