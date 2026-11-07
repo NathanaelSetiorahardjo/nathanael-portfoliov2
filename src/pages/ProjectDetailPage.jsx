@@ -14,7 +14,7 @@ function FrontMatter({ rows }) {
       <span className="fm-fence" aria-hidden="true">
         ---
       </span>
-      {rows.map(([key, value]) => (
+      {rows.filter(([, value]) => value).map(([key, value]) => (
         <div key={key} className="fm-row">
           <dt className="tok-prop">{key}</dt>
           <dd>{value}</dd>
@@ -61,6 +61,10 @@ export default function ProjectDetailPage() {
       <FrontMatter
         rows={[
           ['role', project.role],
+          ['team', project.team],
+          ['event', project.event],
+          ['result', project.result],
+          ['status', project.status],
           ['area', category?.label],
           ['stack', project.tags.join(', ')],
         ]}
@@ -69,6 +73,22 @@ export default function ProjectDetailPage() {
       <ProjectMedia project={project} className="detail-media" eager />
 
       <p className="detail-desc">{project.challenge}</p>
+
+      {project.highlights?.length > 0 && (
+        <>
+          <h2 className="detail-subtitle">
+            <span className="md-mark" aria-hidden="true">
+              ##
+            </span>
+            How it works
+          </h2>
+          <ul className="detail-highlights">
+            {project.highlights.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </>
+      )}
 
       {project.links.length > 0 && (
         <>

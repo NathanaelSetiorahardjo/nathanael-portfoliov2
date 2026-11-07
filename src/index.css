@@ -953,6 +953,134 @@ kbd {
   transform: scale(1.03);
 }
 
+/* ---------- Image slider (projects with several `images`) ---------- */
+/* Lifted above the card's stretched link, so swipes and buttons work. */
+.project-media.has-slider {
+  position: relative;
+  z-index: 3;
+}
+
+.media-slider {
+  position: relative;
+  height: 100%;
+}
+
+.media-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: pointer;
+}
+
+.media-track::-webkit-scrollbar {
+  display: none;
+}
+
+.media-track:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+
+.media-slide {
+  flex: 0 0 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.media-arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: #ffffff;
+  background: rgba(24, 24, 24, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity 200ms var(--ease-out);
+}
+
+.media-prev {
+  left: var(--s2);
+}
+
+.media-next {
+  right: var(--s2);
+}
+
+.media-slider:hover .media-arrow,
+.media-arrow:focus-visible {
+  opacity: 1;
+}
+
+.media-arrow:hover {
+  background: var(--blue);
+}
+
+.media-dots {
+  position: absolute;
+  bottom: var(--s2);
+  left: 50%;
+  display: flex;
+  gap: 2px;
+  padding: 2px 4px;
+  background: rgba(24, 24, 24, 0.6);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+/* The dot is drawn small; the button around it is a bigger hit area. */
+.media-dot {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 16px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.media-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transition: width 250ms var(--ease-out), background-color 250ms var(--ease-out);
+}
+
+.media-dot[aria-current='true']::before {
+  width: 14px;
+  background: #ffffff;
+  border-radius: 3px;
+}
+
+.media-count {
+  position: absolute;
+  top: var(--s2);
+  right: var(--s2);
+  padding: 1px 7px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: #ffffff;
+  background: rgba(24, 24, 24, 0.6);
+  border-radius: var(--radius-small);
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .media-arrow {
+    display: none;
+  }
+}
+
 .bp-illustration {
   width: 100%;
   height: 100%;
@@ -1368,7 +1496,7 @@ kbd {
 
 .fm-row {
   display: grid;
-  grid-template-columns: 6ch 1fr;
+  grid-template-columns: 7ch 1fr;
   gap: var(--s2);
 }
 
@@ -1396,6 +1524,28 @@ kbd {
 .detail-subtitle {
   font-size: 20px;
   font-weight: 650;
+}
+
+.detail-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  max-width: 66ch;
+  padding-left: 0;
+  list-style: none;
+}
+
+.detail-highlights li {
+  position: relative;
+  padding-left: 2.2ch;
+}
+
+.detail-highlights li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  color: var(--tok-punc);
 }
 
 .detail-links,
@@ -2501,6 +2651,11 @@ kbd {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 
+  /* Four featured projects sit in a tidy 2 x 2 instead of 3 + 1. */
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .back-link kbd {
     display: inline;
   }
@@ -2571,11 +2726,21 @@ kbd {
   .card-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* ---------- Reduced motion ----------
    Nothing slides, tilts or zooms. Tiny in-place details (blinking caret, Molly's blink and tail)
    and fades stay, because they don't move anything across the screen. */
+@media (min-width: 1800px) {
+  .featured-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

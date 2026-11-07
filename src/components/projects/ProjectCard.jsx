@@ -13,9 +13,9 @@ export default function ProjectCard({ project }) {
         <FileBadge type="md" />
         {projectFile(project)}
       </p>
-      <ProjectMedia project={project} />
+      <ProjectMedia project={project} linkTo={`/projects/${project.id}`} />
       <div className="project-card-body">
-        <p className="meta">{project.role}</p>
+        <p className="meta">{project.result ?? project.role}</p>
         <h3 className="card-title" style={{ viewTransitionName: `project-title-${project.id}` }}>
           <Link to={`/projects/${project.id}`} viewTransition className="stretched-link">
             {project.title}

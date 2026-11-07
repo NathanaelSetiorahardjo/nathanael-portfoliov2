@@ -28,7 +28,7 @@ export default function HomePage() {
           intro="Selected work in AI and product engineering."
           link={{ to: '/projects', label: 'All projects' }}
         />
-        <div className="card-grid">
+        <div className="card-grid featured-grid">
           {featured.map((p, i) => (
             <Reveal key={p.id} index={i}>
               <ProjectCard project={p} />
