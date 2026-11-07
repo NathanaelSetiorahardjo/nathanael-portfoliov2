@@ -19,8 +19,8 @@ export const projectData = [
     featured: true,
     category: 'ai-research',
     images: [
-      { src: runaDashboard, alt: 'The Runa dashboard, Stats page' },
       { src: runaPresentation, alt: 'Our team presenting Runa to the judging panel in the finals' },
+      { src: runaDashboard, alt: 'The Runa dashboard, Stats page' },
       { src: runaQna, alt: 'Presenting the Runa Notebook of learned SOP rules during the Q&A' },
     ],
     role: 'Developer & Presenter (roles shared evenly)',
