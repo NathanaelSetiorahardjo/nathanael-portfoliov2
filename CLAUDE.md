@@ -38,7 +38,8 @@ Personal portfolio for Nathanael Setiorahardjo: CS student and AI researcher, fu
 
 - Content lives in `src/data/*.js` (profile, projects, leadership, skills, navigation), never hard-coded in components.
 - Never invent personal facts (roles, dates, titles, results). Use only what is in `src/data/` or what Nathanael confirms.
-- Projects without a real screenshot use `illustration` (`vit`, `lane`, `xray`) instead of `image`; drawings live in `src/components/projects/ProjectIllustration.jsx`.
+- Projects without a real screenshot use `illustration` (`vit`, `lane`, `xray`, `ticket`, `chat`) instead of `image`; drawings live in `src/components/projects/ProjectIllustration.jsx`.
+- Optional project fields: `team`, `result`, `highlights` (renders "## How it works"), `gallery` (photo grid). Empty values are hidden.
 - Effects copied from outside (e.g. React Bits JS-CSS variants) go in `src/components/effects/` with a comment linking the source.
 - Keep images under ~300 KB; resize before adding to `src/assets/`.
 - Run `npm run lint` and `npm run build` before calling work done.

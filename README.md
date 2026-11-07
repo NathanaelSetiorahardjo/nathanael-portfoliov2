@@ -38,7 +38,9 @@ npm run preview   # serve the production build locally
 | CV | `public/Nathanael_Setiorahardjo_CV.pdf` (keep the file name) |
 | Colours, fonts, spacing | CSS variables at the top of `src/index.css` |
 
-To add a project, copy an entry in `src/data/projects.js`, give it a new `id`, and import its screenshot at the top of the file. No screenshot yet? Use `illustration: 'vit' | 'lane' | 'xray'` for now (Lane-Guard and TUBRIS use this).
+To add a project, copy an entry in `src/data/projects.js`, give it a new `id`, and import its screenshot at the top of the file. No screenshot yet? Use `illustration: 'vit' | 'lane' | 'xray' | 'ticket' | 'chat'` for now (Lane-Guard, TUBRIS, KAT XI and Runa use this). Optional `team`, `result`, `highlights` and `gallery` fields add rows, a "How it works" list and a photo grid to the project page.
+
+To add the two Runa photos: resize each to under ~300 KB, save them as `src/assets/runa-1.jpg` and `src/assets/runa-2.jpg`, uncomment the two imports and the two `gallery` lines in the Runa entry, and swap `illustration: 'chat'` for `image: runaPhoto1`.
 
 ## Project layout
 

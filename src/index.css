@@ -1368,7 +1368,7 @@ kbd {
 
 .fm-row {
   display: grid;
-  grid-template-columns: 6ch 1fr;
+  grid-template-columns: 7ch 1fr;
   gap: var(--s2);
 }
 
@@ -1396,6 +1396,61 @@ kbd {
 .detail-subtitle {
   font-size: 20px;
   font-weight: 650;
+}
+
+.detail-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  max-width: 66ch;
+  padding-left: 0;
+  list-style: none;
+}
+
+.detail-highlights li {
+  position: relative;
+  padding-left: 2.2ch;
+}
+
+.detail-highlights li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  color: var(--tok-punc);
+}
+
+.detail-gallery {
+  display: grid;
+  gap: var(--s4);
+}
+
+@media (min-width: 720px) {
+  .detail-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.detail-photo {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.detail-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.detail-photo figcaption {
+  padding: var(--s2) var(--s3);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--line);
 }
 
 .detail-links,
