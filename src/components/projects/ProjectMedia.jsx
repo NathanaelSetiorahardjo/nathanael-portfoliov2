@@ -9,10 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import Icon from '../ui/Icon';
 import ProjectIllustration from './ProjectIllustration';
 
-// One shape for every project: [{ src, alt }]. A single `image` is treated as one slide.
+// One shape for every project: [{ src, alt, fit?, position?, bg? }]. A single `image` is one slide.
+// `fit: 'contain'` shows a whole screenshot instead of cropping it; `bg` fills the space around it.
 function projectImages(project) {
   if (project.images?.length) return project.images;
   return project.image ? [{ src: project.image, alt: '' }] : [];
+}
+
+function imageStyle(img) {
+  return { objectFit: img.fit, objectPosition: img.position };
 }
 
 function Slider({ images, title, eager, linkTo }) {
@@ -61,11 +66,19 @@ function Slider({ images, title, eager, linkTo }) {
           <div
             key={img.src}
             className="media-slide"
+            style={{ background: img.bg }}
             role="group"
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${images.length}`}
           >
-            <img src={img.src} alt={img.alt} loading={eager && i === 0 ? 'eager' : 'lazy'} decoding="async" draggable="false" />
+            <img
+              src={img.src}
+              alt={img.alt}
+              style={imageStyle(img)}
+              loading={eager && i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              draggable="false"
+            />
           </div>
         ))}
       </div>

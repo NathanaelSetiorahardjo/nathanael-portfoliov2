@@ -14,6 +14,7 @@ import runaDashboard from '../assets/runa-dashboard.jpg';
 import runaPresentation from '../assets/runa-presentation.jpg';
 import runaQna from '../assets/runa-qna.jpg';
 import katEticket from '../assets/kat-eticket.jpg';
+import katScanner from '../assets/kat-scanner.png';
 
 export const projectData = [
   {
@@ -49,7 +50,17 @@ export const projectData = [
     id: 'kat-ticketing',
     featured: false,
     category: 'engineering',
-    image: katEticket, // a real e-ticket; the buyer's name is pixelated and the code was voided
+    // The e-ticket is real: the buyer's name is pixelated and the code was voided.
+    images: [
+      { src: katEticket, alt: 'A KAT XI e-ticket email with zone, booking code and QR code' },
+      {
+        src: katScanner,
+        alt: 'The KAT XI check-in scanner web app, dark for a dim venue, with manual entry for the last 6 characters',
+        fit: 'contain',
+        position: 'top',
+        bg: '#0f172a',
+      },
+    ],
     role: 'Sole Developer',
     event: 'Konser Akhir Tahun XI, Grahaswara UNTAR, 20 Dec 2026',
     status: 'Live, 53 buyers so far (Nov 2026), about 400 expected', // update as sales grow
@@ -61,6 +72,7 @@ export const projectData = [
       'The treasurer verifies the payment and marks the order VALID in the sheet.',
       'That sends the buyer an e-ticket by email with their zone, show time, package, booking code and a QR code.',
       'On the day, ushers scan the QR code with a separate scanner web app I also built, and swap it for a physical ticket. If a scan fails, they type the last 6 characters of the code.',
+      'The scanner is kept simple and dark on purpose, so it stays readable in a dim concert hall.',
     ],
     tags: ['Google Apps Script', 'Google Sheets', 'Google Forms', 'QR Codes', 'Automation'],
     links: [],
