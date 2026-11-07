@@ -3,23 +3,26 @@
 // Projects without a real screenshot use `illustration` (a pixel drawing) instead of `image`.
 // Optional fields, shown on the project page when present:
 //   team: who it was built with · event: competition and date · result: how it placed · highlights: "How it works" bullet list
-//   gallery: photos [{ src, alt, caption }] shown under "Photos" (two side by side on desktop)
+//   images: several pictures [{ src, alt }] instead of one `image`; cards and pages show a swipeable slider
 import gestitalkThumbnail from '../assets/gestitalk-thumbnail.jpg';
 import instockThumbnail from '../assets/instock-thumbnail.jpg';
 import medcheckThumbnail from '../assets/medcheck-thumbnail.jpg';
 import barberhubThumbnail from '../assets/barberhub-thumbnail.jpg';
 import vitPhoto from '../assets/vit-icimtech.jpg';
 import runaDashboard from '../assets/runa-dashboard.jpg';
-// Runa photos: save them as src/assets/runa-1.jpg and runa-2.jpg (under ~300 KB), then uncomment:
-// import runaPhoto1 from '../assets/runa-1.jpg';
-// import runaPhoto2 from '../assets/runa-2.jpg';
+import runaPresentation from '../assets/runa-presentation.jpg';
+import runaQna from '../assets/runa-qna.jpg';
 
 export const projectData = [
   {
     id: 'runa',
     featured: true,
     category: 'ai-research',
-    image: runaDashboard, // the live Runa dashboard (Stats page)
+    images: [
+      { src: runaDashboard, alt: 'The Runa dashboard, Stats page' },
+      { src: runaPresentation, alt: 'Our team presenting Runa to the judging panel in the finals' },
+      { src: runaQna, alt: 'Presenting the Runa Notebook of learned SOP rules during the Q&A' },
+    ],
     role: 'Developer & Presenter (roles shared evenly)',
     team: 'Jiovanny Lim, Aviel Aquino',
     event: 'SAP x AWS AI Agentic Hackathon, 31 Oct 2026',
@@ -35,10 +38,6 @@ export const projectData = [
       'In the demo, Runa catches a delivery delay, confirms it with the driver, posts the record, and warns the supervisor that the truck now arrives after the dock closes.',
     ],
     tags: ['Agentic AI', 'SAP Joule', 'Amazon Bedrock AgentCore', 'Amazon DynamoDB', 'SAP S/4HANA'],
-    gallery: [
-      // { src: runaPhoto1, alt: 'Describe photo 1', caption: 'Short caption' },
-      // { src: runaPhoto2, alt: 'Describe photo 2', caption: 'Short caption' },
-    ],
     links: [
       { name: 'Dashboard', url: 'https://runa-dashboard-leiva230.cfapps.ap10.hana.ondemand.com/' },
       { name: 'Video', url: 'https://youtu.be/dN6lcfh9J5A' },

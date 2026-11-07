@@ -89,25 +89,6 @@ export default function ProjectDetailPage() {
         </>
       )}
 
-      {project.gallery?.length > 0 && (
-        <>
-          <h2 className="detail-subtitle">
-            <span className="md-mark" aria-hidden="true">
-              ##
-            </span>
-            Photos
-          </h2>
-          <div className="detail-gallery">
-            {project.gallery.map((photo) => (
-              <figure key={photo.src} className="detail-photo">
-                <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-                {photo.caption && <figcaption>{photo.caption}</figcaption>}
-              </figure>
-            ))}
-          </div>
-        </>
-      )}
-
       {project.links.length > 0 && (
         <>
           <h2 className="detail-subtitle">

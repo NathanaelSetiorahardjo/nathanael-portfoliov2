@@ -4,6 +4,8 @@ import { ArrowLeft } from 'pixelarticons/react/ArrowLeft.js';
 import { ArrowRight } from 'pixelarticons/react/ArrowRight.js';
 import { Briefcase } from 'pixelarticons/react/Briefcase.js';
 import { Check } from 'pixelarticons/react/Check.js';
+import { ChevronLeft } from 'pixelarticons/react/ChevronLeft.js';
+import { ChevronRight } from 'pixelarticons/react/ChevronRight.js';
 import { Close } from 'pixelarticons/react/Close.js';
 import { Copy } from 'pixelarticons/react/Copy.js';
 import { Download } from 'pixelarticons/react/Download.js';
@@ -27,6 +29,8 @@ const icons = {
   'arrow-right': ArrowRight,
   briefcase: Briefcase,
   check: Check,
+  'chevron-left': ChevronLeft,
+  'chevron-right': ChevronRight,
   close: Close,
   copy: Copy,
   download: Download,
