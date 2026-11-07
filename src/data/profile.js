@@ -48,4 +48,6 @@ export const aboutCopy = {
 export const contactCopy = {
   heading: "Let's talk",
   body: 'Open to collaborating on AI research, building a product together, or simply connecting. My inbox is always open.',
+  // The one-line version at the bottom of the home page.
+  homeIntro: 'Open to research, product work, or simply connecting.',
 };

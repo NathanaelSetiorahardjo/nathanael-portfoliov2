@@ -1,6 +1,6 @@
 // src/pages/HomePage.jsx
-// nathanael.ts: hero, featured projects, about, recent roles and toolbox.
-import { aboutCopy, profile } from '../data/profile';
+// nathanael.ts: hero, featured projects, about, recent roles, toolbox and a short contact card.
+import { aboutCopy, contactCopy, profile } from '../data/profile';
 import { leadershipCopy, leadershipData } from '../data/leadership';
 import { projectData } from '../data/projects';
 import { toolbox } from '../data/skills';
@@ -8,6 +8,7 @@ import { usePageTitle } from '../hooks/usePageTitle';
 import Hero from '../components/home/Hero';
 import RoleLog from '../components/leadership/RoleLog';
 import ToolboxPit from '../components/home/ToolboxPit';
+import ContactCard from '../components/contact/ContactCard';
 import ProjectCard from '../components/projects/ProjectCard';
 import Reveal from '../components/ui/Reveal';
 import SectionHeader from '../components/ui/SectionHeader';
@@ -64,6 +65,18 @@ export default function HomePage() {
       <section className="section" aria-labelledby="toolbox-title">
         <SectionHeader id="toolbox-title" title="Toolbox" intro="Languages and tools I use most." />
         <ToolboxPit tools={toolbox} />
+      </section>
+
+      <section className="section" aria-labelledby="contact-title">
+        <SectionHeader
+          id="contact-title"
+          title={contactCopy.heading}
+          intro={contactCopy.homeIntro}
+          link={{ to: '/contact', label: 'Contact page' }}
+        />
+        <Reveal>
+          <ContactCard compact />
+        </Reveal>
       </section>
     </>
   );

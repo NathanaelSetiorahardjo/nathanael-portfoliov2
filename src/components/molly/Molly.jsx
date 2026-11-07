@@ -1,8 +1,9 @@
 // src/components/molly/Molly.jsx
 // Molly, the desktop companion. Molly blinks, swishes the tail, watches the pointer,
-// and naps after a while with no activity. A click shows a tip, sometimes with a shortcut.
+// goes for a short stroll now and then, and naps after a while with no activity.
+// A click shows a tip, sometimes with a shortcut.
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { animate, AnimatePresence, motion, useMotionValue, useReducedMotion } from 'motion/react';
 import { mollyLines, mollySleeping } from '../../data/molly';
 import { profile } from '../../data/profile';
 import { useCopyEmail } from '../../hooks/useCopyEmail';
@@ -11,6 +12,10 @@ import Icon from '../ui/Icon';
 import MollySprite from './MollySprite';
 
 const NAP_AFTER_MS = 40000;
+// A stroll starts at a random moment in this window (ms) and moves at this speed (px/s).
+const STROLL_EVERY = [9000, 20000];
+const WALK_SPEED = 42;
+const random = (min, max) => min + Math.random() * (max - min);
 
 function downloadCv() {
   const a = document.createElement('a');
@@ -65,19 +70,83 @@ function useNap() {
   return [asleep, setAsleep];
 }
 
+// How far Molly may walk from home, as [min, max] x offsets in px.
+// In the explorer Molly starts at the left and walks right; on the phone tab bar
+// Molly starts at the right edge and walks left across the screen.
+function strollRange(container, button, placement) {
+  const spriteW = button.offsetWidth;
+  if (placement === 'dock') return [-(window.innerWidth - spriteW - 20), 0];
+  const style = getComputedStyle(container);
+  const inner = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  return [0, Math.max(0, inner - spriteW)];
+}
+
+// Now and then Molly gets up, walks to a random spot and sits again.
+// Off while asleep, talking, hidden or with reduced motion.
+function useStroll(containerRef, buttonRef, placement, enabled) {
+  const x = useMotionValue(0);
+  const [walking, setWalking] = useState(false);
+  const [facing, setFacing] = useState(placement === 'dock' ? -1 : 1);
+  const walk = useRef(null);
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+    let timer;
+    const schedule = () => {
+      timer = setTimeout(start, random(...STROLL_EVERY));
+    };
+    const start = () => {
+      const container = containerRef.current;
+      const button = buttonRef.current;
+      if (!container || !button || document.hidden) return schedule();
+      const [min, max] = strollRange(container, button, placement);
+      const from = x.get();
+      let to = random(min, max);
+      if (Math.abs(to - from) < 40) to = from > (min + max) / 2 ? min : max; // always a proper walk
+      if (Math.abs(to - from) < 20) return schedule();
+      setFacing(to > from ? 1 : -1);
+      setWalking(true);
+      walk.current = animate(x, to, { duration: Math.abs(to - from) / WALK_SPEED, ease: 'linear' });
+      walk.current.then(() => {
+        setWalking(false);
+        schedule();
+      });
+      return undefined;
+    };
+    schedule();
+    return () => {
+      clearTimeout(timer);
+      walk.current?.stop();
+      setWalking(false);
+    };
+  }, [enabled, containerRef, buttonRef, placement, x]);
+
+  return { x, walking, facing };
+}
+
 export default function Molly({ scale = 3, placement = 'explorer' }) {
   const ref = useRef(null);
+  const containerRef = useRef(null);
   const [asleep, setAsleep] = useNap();
   const [line, setLine] = useState(-1); // -1: bubble closed
   const [hops, setHops] = useState(0);
+  const reduceMotion = useReducedMotion();
   const look = useLook(ref, !asleep);
   const { setOpen } = usePalette();
   const copyEmail = useCopyEmail();
 
   const open = line >= 0;
   const current = open ? mollyLines[line] : null;
+  const { x, walking, facing } = useStroll(containerRef, ref, placement, !asleep && !open && !reduceMotion);
+  // Where the speech bubble sits: on phones it slides along with Molly but stays on screen,
+  // and its little pointer always aims at Molly (see .molly-bubble in index.css).
+  const [bubble, setBubble] = useState({ x: 0, shift: 0 });
 
   const onClick = () => {
+    const mollyX = Math.round(x.get());
+    const bubbleW = Math.min(260, window.innerWidth - 32);
+    const shift = placement === 'dock' ? Math.max(mollyX, 26 + bubbleW - window.innerWidth) : 0;
+    setBubble({ x: mollyX, shift });
     setHops((h) => h + 1);
     if (asleep) {
       setAsleep(false);
@@ -102,7 +171,11 @@ export default function Molly({ scale = 3, placement = 'explorer' }) {
   };
 
   return (
-    <div className={`molly molly-${placement}${asleep ? ' is-asleep' : ''}`}>
+    <div
+      ref={containerRef}
+      className={`molly molly-${placement}${asleep ? ' is-asleep' : ''}`}
+      style={{ '--molly-x': `${bubble.x}px`, '--bubble-shift': `${bubble.shift}px` }}
+    >
       <AnimatePresence>
         {(open || asleep) && (
           <motion.div
@@ -131,10 +204,11 @@ export default function Molly({ scale = 3, placement = 'explorer' }) {
         )}
       </AnimatePresence>
 
-      <button
+      <motion.button
         ref={ref}
         type="button"
         className="molly-button"
+        style={{ x }}
         onClick={onClick}
         aria-label={asleep ? 'Molly the cat is napping. Click to wake Molly up' : 'Molly the cat. Click for a tip'}
       >
@@ -145,7 +219,9 @@ export default function Molly({ scale = 3, placement = 'explorer' }) {
           animate={hops ? { y: [0, -10, 0, -3, 0] } : undefined}
           transition={{ duration: 0.5, times: [0, 0.35, 0.65, 0.82, 1], ease: 'easeOut' }}
         >
-          <MollySprite look={look} eyesClosed={asleep} scale={scale} />
+          <span className={`molly-facing${walking && facing < 0 ? ' is-left' : ''}`}>
+            <MollySprite look={look} eyesClosed={asleep} walking={walking} scale={scale} />
+          </span>
         </motion.span>
         {asleep && (
           <span className="molly-zzz" aria-hidden="true">
@@ -169,7 +245,7 @@ export default function Molly({ scale = 3, placement = 'explorer' }) {
             </span>
           )}
         </AnimatePresence>
-      </button>
+      </motion.button>
     </div>
   );
 }
